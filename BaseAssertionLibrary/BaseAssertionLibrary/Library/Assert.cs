@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unit.Library;
@@ -11,7 +10,7 @@ namespace Unit
         private readonly object _value;
         private bool _isNot;
         private bool _isPropertyNameEqual;
-        private List<string> _propertiesNameIgnore = new List<string>();
+        private readonly List<string> _propertiesNameIgnore = new List<string>();
 
         /// <summary>
         /// It's initialized the object reference of the assertions
