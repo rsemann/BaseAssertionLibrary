@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Unit.Library;
 
 namespace Unit
@@ -8,6 +11,7 @@ namespace Unit
         private readonly object _value;
         private bool _isNot;
         private bool _isPropertyNameEqual;
+        private List<string> _propertiesNameIgnore = new List<string>();
 
         /// <summary>
         /// It's initialized the object reference of the assertions
@@ -29,7 +33,7 @@ namespace Unit
             if (typeValue.GetProperties().Length > 0) //Reference types
             {
                 var typeObj = obj.GetType();
-                foreach (var propertyValue in typeValue.GetProperties())
+                foreach (var propertyValue in typeValue.GetProperties().Where(p => !_propertiesNameIgnore.Contains(p.Name)))
                 {
                     bool hasEqualName = false;
 
@@ -110,10 +114,22 @@ namespace Unit
         ///  Apply assertions on object's properties values matched by name with second object. 
         /// (expected type can be different than tested type)
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Own instance</returns>
         public IAssert Properties()
         {
             _isPropertyNameEqual = true;
+            return this;
+        }
+
+        /// <summary>
+        ///  The same as 'Properties' but allows to exclude properties from comparison"
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public IAssert PropertiesWithout(Func<dynamic, object> property)
+        {
+            _isPropertyNameEqual = true;
+            _propertiesNameIgnore.Add(property(_value).ToString());
             return this;
         }
     }

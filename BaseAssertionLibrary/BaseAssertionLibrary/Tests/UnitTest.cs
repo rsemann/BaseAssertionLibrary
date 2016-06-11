@@ -75,22 +75,22 @@ namespace Unit.Tests
             tested.Expect().Properties().Eq(expected);
         }
 
-        //[TestMethod]
-        //public void Test_PropertiesWithout()
-        //{
-        //    var tested = new FizBar() { Bar = "Bar", Fiz = "Fiz" };
-        //    var expected = new {Bar = "Bar", Fiz = "Fiz2"};
-        //    tested.Expect().PropertiesWithout(x => x.Fiz).Eq(expected);
-        //}
+        [TestMethod]
+        public void Test_PropertiesWithout()
+        {
+            var tested = new FizBar() { Bar = "Bar", Fiz = "Fiz" };
+            var expected = new { Bar = "Bar", Fiz = "Fiz2" };
+            tested.Expect().PropertiesWithout(x => x.Fiz).Eq(expected);
+        }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(ExpectationFailedExceptin))]
-        //public void Test_PropertiesWithout_Fails()
-        //{
-        //    var tested = new FizBar() { Bar = "Bar", Fiz = "Fiz" };
-        //    var expected = new { Bar = "Bar2", Fiz = "Fiz2" };
-        //    tested.Expect().PropertiesWithout(x => x.Fiz).Eq(expected);
-        //}
+        [TestMethod]
+        [ExpectedException(typeof(ExpectationFailedExceptin))]
+        public void Test_PropertiesWithout_Fails()
+        {
+            var tested = new FizBar() { Bar = "Bar", Fiz = "Fiz" };
+            var expected = new { Bar = "Bar2", Fiz = "Fiz2" };
+            tested.Expect().PropertiesWithout(x => x.Fiz).Eq(expected);
+        }
     }
 
     public class FizBar

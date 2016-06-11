@@ -1,4 +1,7 @@
-﻿namespace Unit.Library
+﻿using System;
+using Unit.Tests;
+
+namespace Unit.Library
 {
     public interface IAssert
     {
@@ -7,5 +10,6 @@
         IAssert Not();
         void RaiseError();
         IAssert Properties();
+        IAssert PropertiesWithout(Func<dynamic, object> property);
     }
 }
