@@ -6,5 +6,6 @@
         void IsGreater(object obj);
         IAssert Not();
         void RaiseError();
+        IAssert Properties();
     }
 }

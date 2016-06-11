@@ -7,6 +7,7 @@ namespace Unit
     {
         private readonly object _value;
         private bool _isNot;
+        private bool _isPropertyNameEqual;
 
         /// <summary>
         /// It's initialized the object reference of the assertions
@@ -24,11 +25,44 @@ namespace Unit
         /// <param name="obj">Object to be compared with the initial value</param>
         public void Eq(object obj)
         {
-            if (_isNot && _value.Equals(obj))
-                throw new ExpectationFailedExceptin(string.Format("{0} and {1} are equals", _value, obj));
+            var typeValue = _value.GetType();
+            if (typeValue.GetProperties().Length > 0) //Reference types
+            {
+                var typeObj = obj.GetType();
+                foreach (var propertyValue in typeValue.GetProperties())
+                {
+                    bool hasEqualName = false;
 
-            if (!_isNot && !_value.Equals(obj))
-                throw new ExpectationFailedExceptin(string.Format("Expected: {0}, Found {1}", _value, obj));
+                    foreach (var propertyObj in typeObj.GetProperties())
+                    {
+                        if (propertyValue.Name.Equals(propertyObj.Name))
+                        {
+                            Compare(propertyValue.GetValue(_value, null), propertyObj.GetValue(obj, null));
+                            hasEqualName = true;
+                            break;
+                        }
+                    }
+
+                    if (_isPropertyNameEqual && !hasEqualName)
+                        throw new ExpectationFailedExceptin("Properties name does not match");
+                }
+            }
+            else //Value types
+                Compare(_value, obj);
+        }
+
+        /// <summary>
+        /// Generic method to compare values between objects
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="obj"></param>
+        private void Compare(object value, object obj)
+        {
+            if (_isNot && value.Equals(obj))
+                throw new ExpectationFailedExceptin(string.Format("{0} and {1} are equals", value, obj));
+
+            if (!_isNot && !value.Equals(obj))
+                throw new ExpectationFailedExceptin(string.Format("Expected: {0}, Found {1}", value, obj));
         }
 
         /// <summary>
@@ -70,6 +104,17 @@ namespace Unit
 
             if (!hasThrownError)
                 throw new ExpectationFailedExceptin("Exception has not been thrown.");
+        }
+
+        /// <summary>
+        ///  Apply assertions on object's properties values matched by name with second object. 
+        /// (expected type can be different than tested type)
+        /// </summary>
+        /// <returns></returns>
+        public IAssert Properties()
+        {
+            _isPropertyNameEqual = true;
+            return this;
         }
     }
 }
