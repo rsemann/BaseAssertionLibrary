@@ -50,5 +50,26 @@ namespace Unit
             _isNot = !_isNot;
             return this;
         }
+
+        /// <summary>
+        /// Check if method throws an exception of given type
+        /// </summary>
+        public void RaiseError()
+        {
+            bool hasThrownError = false;
+
+            try
+            {
+                Action action = _value as Action;
+                action();
+            }
+            catch
+            {
+                hasThrownError = true;
+            }
+
+            if (!hasThrownError)
+                throw new ExpectationFailedExceptin("Exception has not been thrown.");
+        }
     }
 }
