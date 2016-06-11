@@ -1,4 +1,5 @@
-﻿using Unit.Library;
+﻿using System;
+using Unit.Library;
 
 namespace Unit
 {
@@ -23,6 +24,16 @@ namespace Unit
         {
             if (!_value.Equals(obj))
                 throw new ExpectationFailedExceptin(string.Format("Expected: {0}, Found {1}", _value, obj));
+        }
+
+        /// <summary>
+        ///  Check if one object is greater than the other
+        /// </summary>
+        /// <param name="obj">Object to verify</param>
+        public void IsGreater(dynamic obj)
+        {
+            if (Convert.ToDecimal(_value) < Convert.ToDecimal(obj))
+                throw new ExpectationFailedExceptin(string.Format("Value {0} smaller than {1}", _value, obj));
         }
     }
 }

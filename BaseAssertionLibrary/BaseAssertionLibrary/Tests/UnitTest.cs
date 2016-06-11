@@ -19,18 +19,18 @@ namespace Unit.Tests
             6.Expect().Eq(5);
         }
 
-        //[TestMethod]
-        //public void Test_Greater()
-        //{
-        //    10.Expect().IsGreater(6);
-        //}
+        [TestMethod]
+        public void Test_Greater()
+        {
+            10.Expect().IsGreater(6);
+        }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(ExpectationFailedExceptin))]
-        //public void Test_Greater_Fails()
-        //{
-        //    (-10).Expect().IsGreater(4);
-        //}
+        [TestMethod]
+        [ExpectedException(typeof(ExpectationFailedExceptin))]
+        public void Test_Greater_Fails()
+        {
+            (-10).Expect().IsGreater(4);
+        }
 
         //[TestMethod]
         //public void Test_NotEq()
