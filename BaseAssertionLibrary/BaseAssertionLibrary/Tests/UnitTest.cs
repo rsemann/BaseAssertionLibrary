@@ -32,18 +32,18 @@ namespace Unit.Tests
             (-10).Expect().IsGreater(4);
         }
 
-        //[TestMethod]
-        //public void Test_NotEq()
-        //{
-        //    10.Expect().Not().Eq(9);
-        //}
+        [TestMethod]
+        public void Test_NotEq()
+        {
+            10.Expect().Not().Eq(9);
+        }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(ExpectationFailedExceptin))]
-        //public void Test_NotEq_Fails()
-        //{
-        //    10.Expect().Not().Eq(10);
-        //}
+        [TestMethod]
+        [ExpectedException(typeof(ExpectationFailedExceptin))]
+        public void Test_NotEq_Fails()
+        {
+            10.Expect().Not().Eq(10);
+        }
         
         //[TestMethod]
         //public void Test_Raise_Error()

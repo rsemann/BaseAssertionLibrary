@@ -6,6 +6,7 @@ namespace Unit
     public class Assert : IAssert
     {
         private readonly object _value;
+        private bool _isNot;
 
         /// <summary>
         /// It's initialized the object reference of the assertions
@@ -14,6 +15,7 @@ namespace Unit
         public Assert(object value)
         {
             _value = value;
+            _isNot = false;
         }
 
         /// <summary>
@@ -22,7 +24,10 @@ namespace Unit
         /// <param name="obj">Object to be compared with the initial value</param>
         public void Eq(object obj)
         {
-            if (!_value.Equals(obj))
+            if (_isNot && _value.Equals(obj))
+                throw new ExpectationFailedExceptin(string.Format("{0} and {1} are equals", _value, obj));
+
+            if (!_isNot && !_value.Equals(obj))
                 throw new ExpectationFailedExceptin(string.Format("Expected: {0}, Found {1}", _value, obj));
         }
 
@@ -34,6 +39,16 @@ namespace Unit
         {
             if (Convert.ToDecimal(_value) < Convert.ToDecimal(obj))
                 throw new ExpectationFailedExceptin(string.Format("Value {0} smaller than {1}", _value, obj));
+        }
+
+        /// <summary>
+        /// Invert assertion result
+        /// </summary>
+        /// <returns>Own instance</returns>
+        public IAssert Not()
+        {
+            _isNot = !_isNot;
+            return this;
         }
     }
 }
