@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Unit.Library
+﻿namespace Unit.Library
 {
     public interface IAssert
     {
+        void Eq(object obj);
     }
 }
