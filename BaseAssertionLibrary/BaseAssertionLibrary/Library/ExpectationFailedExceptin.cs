@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Unit.Library
+namespace Unit
 {
     public class ExpectationFailedExceptin : Exception
     {
