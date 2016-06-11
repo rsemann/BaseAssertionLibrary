@@ -40,7 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Library\Assert.cs" />
+    <Compile Include="Library\AssertExtensions.cs" />
     <Compile Include="Library\ExpectationFailedExceptin.cs" />
+    <Compile Include="Library\IAssert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\UnitTest.cs" />
   </ItemGroup>
